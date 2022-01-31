@@ -40,7 +40,7 @@ def resize_json(json_path, save_dir, new_h_w, train_val, file_name):
 def resize_images(img_path, save_dir, new_h_w, train_val, file_name):
     img = cv2.imread(img_path)
     if not img is None:
-        resize_img = cv2.resize(img, [new_h_w[1], new_h_w[0]])
+        resize_img = cv2.resize(img, (new_h_w[1], new_h_w[0]))
         cv2.imwrite(save_dir + '/' + train_val + '/' + file_name, resize_img)
 
 
