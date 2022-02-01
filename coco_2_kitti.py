@@ -40,9 +40,9 @@ def coco2kitti(cat_names, ann_files, save_dir):
                     # Format line in label file
                     # Note: all whitespace will be removed from class names
                     out_str = [cat_name.replace(" ", "")
-                               + ' ' + ' '.join(['0'] * 2)
+                               + ' ' + ' '.join(['0'] * 3)
                                + ' ' + ' '.join([b for b in bbox])
-                               + ' ' + ' '.join(['0'] * 8)
+                               + ' ' + ' '.join(['0'] * 7)
                                + '\n']
                     label_file.write(out_str[0])
 
