@@ -10,7 +10,7 @@ def change_json_data(json_path, save_dir, new_h_w, train_val, file_name):
     change_points_flag = False
     change_path_flag = True
     change_label_flag = False
-    remove_labels_flag = True
+    remove_labels_flag = False
 
     with open(json_path, 'r') as json_file:
         json_data = json.load(json_file)
@@ -69,29 +69,29 @@ def create_directory(save_dir):
 
 
 def resize_image_annotation(data_dir, save_dir, new_h_w):
-    dir_list = ['video_1']
+    dir_list = ['video_2']
     last_file_id, last_file_ext = 0, '.json'
     start_file_id = 0
 
     for d_list in dir_list:
-        create_directory(save_dir + '/' + d_list + '_1')
+        create_directory(save_dir + '/' + d_list)
         file_list = os.listdir(data_dir + '/' + d_list)
         output_dir_files = os.listdir(data_dir + '/' + d_list + '_modified')
         sorted_files = sorted(output_dir_files, reverse=True)
         if len(sorted_files) > 0:
             last_file_name = sorted_files[0]
-            # last_file_id, last_file_ext = last_file_name.split('.')
-            last_file_id = 1993
-            start_file_id = 724
+            last_file_id, last_file_ext = last_file_name.split('.')
+            # last_file_id = 1993
+            # start_file_id = 724
         for file in tqdm.tqdm(file_list):
             if file.endswith('.json'):
                 file_id, file_ext = file.split('.')
                 # line change shift+Alt+ [up or down]
-                # if int(file_id) >= int(last_file_id):
-                if start_file_id < int(file_id) <= last_file_id:
+                # if start_file_id < int(file_id) <= last_file_id:
+                if int(file_id) >= int(last_file_id):
                     file_path = os.path.join(data_dir + '/' + d_list + '/' + file)
                     # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
-                    change_json_data(file_path, save_dir + '/' + d_list + '_1', new_h_w, d_list, file)
+                    change_json_data(file_path, save_dir + '/' + d_list + '_modified', new_h_w, d_list, file)
                 else:
                     continue
             # else:
@@ -140,5 +140,5 @@ if __name__ == '__main__':
     input_dir = os.getcwd() + '/annotation'
     output_dir = os.getcwd() + '/annotation'
     new_h, new_w = 1080, 1920
-    # resize_image_annotation(input_dir, output_dir, [new_h, new_w])
-    generate_detection_label(input_dir, output_dir, [new_h, new_w])
+    resize_image_annotation(input_dir, output_dir, [new_h, new_w])
+    # generate_detection_label(input_dir, output_dir, [new_h, new_w])

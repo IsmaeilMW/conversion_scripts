@@ -6,25 +6,29 @@ import shutil
 
 os.chdir(r"..\\")
 
+data_dir = os.getcwd() + "/model_data/separated_data/data_1/resize_data/image_w_ann"
+save_dir = os.getcwd() + "/model_data/separated_data/data_1"
 
-train_folder = "model_data/image_w_ann/train"
+train_folder = data_dir + "/train"
 list_train = os.listdir(train_folder)
 
-val_folder = "model_data/image_w_ann/val"
+val_folder = data_dir + "/val"
 list_val = os.listdir(val_folder)
 
-test_folder = "model_data/image_w_ann/test"
+test_folder = data_dir + "/test"
 list_test = os.listdir(test_folder)
 
 # set path for coco json to be saved
-export_dir = "model_data/coco"
+export_dir = save_dir + "/coco"
 
-dir_file_list = os.listdir(export_dir)
-if len(dir_file_list) >0:
-    for file in dir_file_list:
-        shutil.rmtree(export_dir + '/' + file)
+if os.path.exists(export_dir):
+    dir_file_list = os.listdir(export_dir)
+    if len(dir_file_list) > 0:
+        for file in dir_file_list:
+            shutil.rmtree(export_dir + '/' + file)
 
 save_json_path = export_dir + "/train"
+
 labelme2coco.convert(train_folder, save_json_path)
 save_json_path = export_dir + '/val'
 labelme2coco.convert(val_folder, save_json_path)
