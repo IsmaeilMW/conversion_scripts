@@ -55,10 +55,11 @@ if __name__ == '__main__':
 
     # Check if old file exits.
     if os.path.exists(output_dir):
-        dir_list = os.listdir(output_dir)
-        if len(dir_list) > 0:
-            for dir_name in dir_list:
-                shutil.rmtree(os.getcwd() + '/model_data/separated_data/data_1/yolo/' + dir_name)
+        # dir_list = os.listdir(output_dir)
+        # if len(dir_list) > 0:
+        #     for dir_name in dir_list:
+        #         shutil.rmtree(os.getcwd() + '/model_data/separated_data/data_1/yolo/' + dir_name)
+        pass
     else:
         os.mkdir(output_dir)
 
@@ -66,10 +67,13 @@ if __name__ == '__main__':
     # for images containing the listed classes and only the listed classes
     # will be in the label file
     # catNms = ['person', 'dog', 'skateboard']
+    # All cat names = ["cargo_loader", "jet_bridge", "belt_loader",
+    #               "catering_vehicle", "cargo_door_opener_ladder", "pca", "airplane",
+    #               "aircraft_front", "pushback_tug", "baggage", "tow_tractor", "chocks_on", "baggage_trailor",
+    #               "chocks_off", "belt_loader_version2", "fwd_cargo_door_open"]
     sel_catNms = ["cargo_loader", "jet_bridge", "belt_loader",
-                  "catering_vehicle", "cargo_door_opener_ladder", "pca", "airplane",
-                  "aircraft_front", "pushback_tug", "baggage", "tow_tractor", "chocks_on", "baggage_trailor",
-                  "chocks_off", "belt_loader_version2", "fwd_cargo_door_open"]
+                  "catering_vehicle", "pca",
+                  "aircraft_front", "pushback_tug"]
 
     for d_set in dataset_list:
         # These settings assume this script is in the annotations directory
