@@ -35,14 +35,15 @@ def coco2yolo(cat_names, ann_files, save_dir):
                 anns = coco.loadAnns(ann_ids)
                 for a in anns:
                     bbox = a['bbox']
-                    # Convert COCO bbox coords to Kitti ones
-                    centre_x, centre_y = (bbox[2] + bbox[0]) / 2, (bbox[3] + bbox[1]) / 2
+                    # Convert COCO bbox coords to yolo ones
+                    centre_x, centre_y = bbox[0] + bbox[2] / 2, bbox[1] + bbox[3] / 2
                     bbox = [centre_x/width, centre_y/height, bbox[2]/width, bbox[3]/height]
                     bbox = [str(b) for b in bbox]
                     cat_name = cat_idx[a['category_id']]
+                    cat_id = sel_catNms.index(cat_name)
                     # Format line in label file
                     # Note: all whitespace will be removed from class names
-                    out_str = [cat_name.replace(" ", "")
+                    out_str = [str(cat_id)
                                + ' ' + ' '.join([b for b in bbox])
                                + '\n']
                     label_file.write(out_str[0])
@@ -51,7 +52,7 @@ def coco2yolo(cat_names, ann_files, save_dir):
 if __name__ == '__main__':
     os.chdir(r"..\\")
     dataset_list = ['train', 'test', 'val']
-    output_dir = os.getcwd() + '/model_data/separated_data/data_1/yolo/'
+    output_dir = os.getcwd() + '/model_data/datasets/1/detection/yolo/'
 
     # Check if old file exits.
     if os.path.exists(output_dir):
@@ -80,7 +81,7 @@ if __name__ == '__main__':
         # dataDir = 'model_data/image_w_ann/train'
         # segmentType = 'train'
         # annFile = '%s/annotations/instances_%s.json' % (dataDir, segmentType)
-        annFile = 'model_data/separated_data/data_1/coco/%s/dataset.json' % d_set
+        annFile = 'model_data/datasets/1/detection/coco/%s/dataset.json' % d_set
         if os.path.isdir(output_dir + d_set):
             print('Labels folder already exists - exiting to prevent badness')
         else:

@@ -105,7 +105,7 @@ def resize_image_annotation(data_dir, save_dir, new_h_w):
 
 if __name__ == '__main__':
     os.chdir(r"..\\")
-    input_dir = os.getcwd() + '/model_data/separated_data/data_1'
-    output_dir = os.getcwd() + '/model_data/separated_data/data_1/resize_data'
+    input_dir = os.getcwd() + '/model_data/datasets/1'
+    output_dir = os.getcwd() + '/model_data/datasets/1/resize_data'
     new_h, new_w = 720, 1280
     resize_image_annotation(input_dir, output_dir, [new_h, new_w])

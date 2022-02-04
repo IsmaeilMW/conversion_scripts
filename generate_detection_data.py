@@ -43,7 +43,7 @@ def generate_detection_label(data_dir, save_dir, new_h_w):
 
 if __name__ == '__main__':
     os.chdir(r"..\\")
-    input_dir = os.getcwd() + '/model_data/separated_data/data_1/annotation'
-    output_dir = os.getcwd() + '/model_data/separated_data/data_1/annotation'
+    input_dir = os.getcwd() + '/model_data/datasets/1/annotation'
+    output_dir = os.getcwd() + '/model_data/datasets/1/detection/annotation'
     new_h, new_w = 1080, 1920
     generate_detection_label(input_dir, output_dir, [new_h, new_w])

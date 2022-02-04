@@ -51,7 +51,7 @@ def create_test_train_val(in_image_dir, in_annotation_dir, save_dir):
 
 if __name__ == '__main__':
     os.chdir(r"..\\")
-    input_image_dir = os.getcwd() + '/model_data/separated_data/data_1/images/video_1'
-    input_annotation_dir = os.getcwd() + '/model_data/separated_data/data_1/annotation/video_1'
-    output_dir = os.getcwd() + '/model_data/separated_data/data_1/'
+    input_image_dir = os.getcwd() + '/model_data/datasets/1/images/video_1'
+    input_annotation_dir = os.getcwd() + '/model_data/datasets/1/annotation/video_1'
+    output_dir = os.getcwd() + '/model_data/datasets/1/'
     create_test_train_val(input_image_dir, input_annotation_dir, output_dir)

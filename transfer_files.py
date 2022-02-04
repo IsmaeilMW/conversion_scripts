@@ -18,6 +18,7 @@ def extract_annotation_files(ref_img_dir, input_ann):
     dir_list = ['video_1']
 
     for dir_name in dir_list:
+        create_directory(ref_img_dir + '/' + 'annotation')
         create_directory(ref_img_dir + '/' + 'annotation' + '/' + dir_name)
         img_list = os.listdir(ref_img_dir + '/' + 'images' + '/' + dir_name)
         for file_name in tqdm.tqdm(img_list):
@@ -40,7 +41,7 @@ def extract_image_files(ref_data_dir, input_img_dir):
 
 if __name__ == '__main__':
     os.chdir("..\\")
-    ref_file_dir = 'model_data/separated_data/data_1/'
+    ref_file_dir = os.getcwd() + '/model_data/datasets/1'
     ann_file_dir = 'annotation/'
     img_file_dir = 'images/'
     extract_annotation_files(ref_file_dir, ann_file_dir)
