@@ -6,7 +6,7 @@ import shutil
 
 os.chdir(r"..\\")
 
-data_dir = os.getcwd() + "/model_data/datasets/1/resize_data/image_w_ann"
+data_dir = os.getcwd() + "/model_data/datasets/1"
 save_dir = os.getcwd() + "/model_data/datasets/1"
 
 train_folder = data_dir + "/train"

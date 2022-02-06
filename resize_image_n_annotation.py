@@ -107,5 +107,7 @@ if __name__ == '__main__':
     os.chdir(r"..\\")
     input_dir = os.getcwd() + '/model_data/datasets/1'
     output_dir = os.getcwd() + '/model_data/datasets/1/resize_data'
-    new_h, new_w = 720, 1280
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
+    new_h, new_w = 1080, 1920
     resize_image_annotation(input_dir, output_dir, [new_h, new_w])
