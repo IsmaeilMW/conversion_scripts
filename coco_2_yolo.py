@@ -75,6 +75,7 @@ def coco2yolo(cat_names, ann_files, img_files, r_height_width, save_dir):
                 anns = coco.loadAnns(ann_ids)
                 for a in anns:
                     bbox = a['bbox']
+                    bbox = [abs(coord) for coord in bbox]
                     if resize_flag:
                         bbox = resize_annotation_data(bbox, r_height_width, o_height_width)
 
