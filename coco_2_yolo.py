@@ -62,7 +62,7 @@ def coco2yolo(cat_names, ann_files, img_files, r_height_width, save_dir):
             o_height_width = [height, width]
 
             "check whether resize is required"
-            if o_height_width[0] == height:
+            if o_height_width[0] == r_height_width[0]:
                 copy_files(img_files + '/' + img_fname, save_dir + '/' + img_fname)
             else:
                 resize_flag = True
@@ -81,7 +81,8 @@ def coco2yolo(cat_names, ann_files, img_files, r_height_width, save_dir):
 
                     # Convert COCO bbox coords to yolo ones
                     centre_x, centre_y = bbox[0] + bbox[2] / 2, bbox[1] + bbox[3] / 2
-                    bbox = [centre_x / width, centre_y / height, bbox[2] / width, bbox[3] / height]
+                    bbox = [centre_x / r_height_width[1], centre_y / r_height_width[0],
+                            bbox[2] / r_height_width[1], bbox[3] / r_height_width[0]]
                     bbox = [str(b) for b in bbox]
                     cat_name = cat_idx[a['category_id']]
                     split_cat_name = cat_name.split('_')
