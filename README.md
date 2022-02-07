@@ -51,7 +51,29 @@ data
                 val
                     '.jpg'
                     '.json'
-                
+                coco
+                    test
+                        converted annotation from labelme to coco
+                    train
+                        converted annotation from labelme to coco
+                    val
+                        converted annotation from labelme to coco
+                detection
+                    ## converted coco to different detection label format.
+                    yolo
+                        test
+                        train
+                        val
+                    kitti
+                        test
+                        train
+                        val
+                classification
+                    ## contain the dataset used for classfication.
+                    resnet
+                        test
+                        train
+                        val
 ```
 
 ##Order to follow
