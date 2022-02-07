@@ -16,9 +16,11 @@ python transfer_files.py
 ## For detection
 ```
 ---remove the '_connected/_disconnected' suffix from label names.
-python generate_detection_data.py
-python resize_image_n_annotation.py
-python coco_2_kitti.py/coco_2_yolo.py
+python coco_2_yolo.py
+python coco_2_kitti.py
 ```
 
 ## For classification
+```
+python generate_classification_data.py
+```
