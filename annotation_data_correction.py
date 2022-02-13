@@ -69,12 +69,12 @@ def create_directory(save_dir):
 
 
 def resize_image_annotation(data_dir, save_dir, new_h_w):
-    dir_list = ['video_2']
+    dir_list = ['video_3']
     last_file_id, last_file_ext = 0, '.json'
     start_file_id = 0
 
     for d_list in dir_list:
-        create_directory(save_dir + '/' + d_list)
+        create_directory(save_dir + '/' + d_list + '_modified')
         file_list = os.listdir(data_dir + '/' + d_list)
         output_dir_files = os.listdir(data_dir + '/' + d_list + '_modified')
         sorted_files = sorted(output_dir_files, reverse=True)
