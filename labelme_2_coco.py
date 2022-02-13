@@ -4,7 +4,10 @@ import os
 import sys
 import shutil
 
-os.chdir(r"..\\")
+if os.name == 'nt':
+    os.chdir(r"..\\")
+else:
+    os.chdir(r"../")
 
 data_dir = os.getcwd() + "/model_data/datasets/1"
 save_dir = os.getcwd() + "/model_data/datasets/1"

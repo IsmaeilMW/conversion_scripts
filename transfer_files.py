@@ -40,7 +40,11 @@ def extract_image_files(ref_data_dir, input_img_dir):
 
 
 if __name__ == '__main__':
-    os.chdir("..\\")
+    if os.name == 'nt':
+        os.chdir(r"..\\")
+    else:
+        os.chdir(r"../")
+
     ref_file_dir = os.getcwd() + '/model_data/datasets/1'
     ann_file_dir = 'annotation/'
     img_file_dir = 'images/'

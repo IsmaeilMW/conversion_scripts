@@ -20,45 +20,40 @@ def crop_image(img, bbox, cat_name):
         split_name = cat_name.split('_')[:-1]
         cat_name = '_'.join(split_name)
 
+    buffer_pixel = 50
     bbox = [abs(x) for x in bbox]
     crop_img = None
     if cat_name == 'jet_bridge':
         # left shift the x1y1 coordinates.
-        buffer_pixel = 50
-        n_x1, n_y1 = bbox[0] - buffer_pixel, bbox[1] - buffer_pixel
+        n_x1, n_y1 = bbox[0] - buffer_pixel, int(bbox[1] - 0.5 * buffer_pixel)
         x2, y2 = bbox[0] + bbox[2], bbox[1] + bbox[3]
         crop_img = img[n_y1:y2, n_x1:x2]
     elif cat_name == 'cargo_loader':
         # right shift the x2y2 coordinates.
-        buffer_pixel = 50
-        n_y1 = bbox[1] - int(1.5 * buffer_pixel)
+        n_y1 = bbox[1] - int(0.5 * buffer_pixel)
         x2, y2 = bbox[0] + bbox[2], bbox[1] + bbox[3]
-        n_x2, n_y2 = x2 + buffer_pixel, y2 + buffer_pixel
+        n_x2, n_y2 = x2 + buffer_pixel, y2
         crop_img = img[n_y1:n_y2, bbox[0]:n_x2]
     elif cat_name == 'belt_loader':
         # right shift the x2y2 coordinates.
-        buffer_pixel = 50
         x2, y2 = bbox[0] + bbox[2], bbox[1] + bbox[3]
-        n_x2, n_y2 = x2 + 2 * buffer_pixel, y2 + 2 * buffer_pixel
+        n_x2, n_y2 = x2 + 2 * buffer_pixel, y2
         crop_img = img[bbox[1]:n_y2, bbox[0]:n_x2]
     elif cat_name == 'catering_vehicle':
         # right shift the x2y2 coordinates.
-        buffer_pixel = 50
         x2, y2 = bbox[0] + bbox[2], bbox[1] + bbox[3]
-        n_x2, n_y2 = x2 + 2 * buffer_pixel, y2 + 2 * buffer_pixel
+        n_x2, n_y2 = x2 + 2 * buffer_pixel, y2
         crop_img = img[bbox[1]:n_y2, bbox[0]:n_x2]
     elif cat_name == 'pca':
         # left shift the x1y1 coordinates.
-        buffer_pixel = 50
-        n_x1, n_y1 = bbox[0] - 2 * buffer_pixel, bbox[1] - 2 * buffer_pixel
+        n_x1, n_y1 = bbox[0] - 2 * buffer_pixel, int(bbox[1] - 0.5 * buffer_pixel)
         x2, y2 = bbox[0] + bbox[2], bbox[1] + bbox[3]
         crop_img = img[n_y1:y2, n_x1:x2]
     elif cat_name == 'pushback_tug':
         # up shift the y1 coordinates.
-        buffer_pixel = 50
         x1, n_y1 = bbox[0], bbox[1] - 2 * buffer_pixel
         x2, y2 = bbox[0] + bbox[2], bbox[1] + bbox[3]
-        nx2 = x2 + buffer_pixel
+        nx2 = int(x2 + 0.5 * buffer_pixel)
         crop_img = img[n_y1:y2, x1:nx2]
         # cv2.imshow("crop_img", crop_img)
         # cv2.waitKey(0)
@@ -108,7 +103,11 @@ def coco2classification(cat_names, ann_files, input_img_dir, save_dir):
 
 
 if __name__ == '__main__':
-    os.chdir(r"..\\")
+    if os.name == 'nt':
+        os.chdir(r"..\\")
+    else:
+        os.chdir(r"../")
+
     dataset_list = ['train', 'test', 'val']
     output_dir = os.getcwd() + '/model_data/datasets/1/classification'
 

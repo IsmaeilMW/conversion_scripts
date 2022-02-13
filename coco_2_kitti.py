@@ -96,7 +96,10 @@ def coco2kitti(cat_names, ann_files, img_files, r_height_width, save_dir):
 
 
 if __name__ == '__main__':
-    os.chdir(r"..\\")
+    if os.name == 'nt':
+        os.chdir(r"..\\")
+    else:
+        os.chdir(r"../")
     dataset_list = ['train', 'test', 'val']
     output_dir = os.getcwd() + '/model_data/datasets/1/detection/kitti/'
     req_height = 720

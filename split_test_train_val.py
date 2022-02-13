@@ -66,7 +66,10 @@ def create_test_train_val(in_image_dir, in_annotation_dir, save_dir):
 
 
 if __name__ == '__main__':
-    os.chdir(r"..\\")
+    if os.name == 'nt':
+        os.chdir(r"..\\")
+    else:
+        os.chdir(r"../")
     input_image_dir = os.getcwd() + '/model_data/datasets/1/merge_files/images'
     input_annotation_dir = os.getcwd() + '/model_data/datasets/1/merge_files/annotation'
     output_dir = os.getcwd() + '/model_data/datasets/1/'
