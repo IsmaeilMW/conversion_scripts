@@ -30,10 +30,17 @@ if os.path.exists(export_dir):
         for file in dir_file_list:
             shutil.rmtree(export_dir + '/' + file)
 
-save_json_path = export_dir + "/train"
-
-labelme2coco.convert(train_folder, save_json_path)
-save_json_path = export_dir + '/val'
-labelme2coco.convert(val_folder, save_json_path)
-save_json_path = export_dir + '/test'
-labelme2coco.convert(test_folder, save_json_path)
+if os.name == 'nt':
+    save_json_path = export_dir + "/train"
+    labelme2coco.convert(train_folder, save_json_path)
+    save_json_path = export_dir + '/val'
+    labelme2coco.convert(val_folder, save_json_path)
+    save_json_path = export_dir + '/test'
+    labelme2coco.convert(test_folder, save_json_path)
+else:
+    save_json_path = export_dir + "/train.json"
+    labelme2coco.convert(train_folder, save_json_path)
+    save_json_path = export_dir + '/val.json'
+    labelme2coco.convert(val_folder, save_json_path)
+    save_json_path = export_dir + '/test.json'
+    labelme2coco.convert(test_folder, save_json_path)

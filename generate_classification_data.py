@@ -21,7 +21,7 @@ def crop_image(img, bbox, cat_name):
         cat_name = '_'.join(split_name)
 
     buffer_pixel = 50
-    bbox = [abs(x) for x in bbox]
+    bbox = [int(abs(x)) for x in bbox]
     crop_img = None
     if cat_name == 'jet_bridge':
         # left shift the x1y1 coordinates.
@@ -36,9 +36,10 @@ def crop_image(img, bbox, cat_name):
         crop_img = img[n_y1:n_y2, bbox[0]:n_x2]
     elif cat_name == 'belt_loader':
         # right shift the x2y2 coordinates.
+        n_y1 = int(bbox[1] - 0.5 * buffer_pixel)
         x2, y2 = bbox[0] + bbox[2], bbox[1] + bbox[3]
         n_x2, n_y2 = x2 + 2 * buffer_pixel, y2
-        crop_img = img[bbox[1]:n_y2, bbox[0]:n_x2]
+        crop_img = img[n_y1:n_y2, bbox[0]:n_x2]
     elif cat_name == 'catering_vehicle':
         # right shift the x2y2 coordinates.
         x2, y2 = bbox[0] + bbox[2], bbox[1] + bbox[3]
@@ -58,6 +59,25 @@ def crop_image(img, bbox, cat_name):
         # cv2.imshow("crop_img", crop_img)
         # cv2.waitKey(0)
     return crop_img
+
+
+def resize_image(img, input_shape, letter_box=True):
+    if letter_box:
+        img_h, img_w, _ = img.shape
+        new_h, new_w = input_shape[0], input_shape[1]
+        offset_h, offset_w = 0, 0
+        if (new_w / img_w) <= (new_h / img_h):
+            new_h = int(img_h * new_w / img_w)
+            offset_h = (input_shape[0] - new_h) // 2
+        else:
+            new_w = int(img_w * new_h / img_h)
+            offset_w = (input_shape[1] - new_w) // 2
+        resized = cv2.resize(img, (new_w, new_h))
+        img = np.full((input_shape[0], input_shape[1], 3), 127, dtype=np.uint8)
+        img[offset_h:(offset_h + new_h), offset_w:(offset_w + new_w), :] = resized
+    else:
+        img = cv2.resize(img, (224, 224))
+    return img
 
 
 def coco2classification(cat_names, ann_files, input_img_dir, save_dir):
@@ -81,7 +101,10 @@ def coco2classification(cat_names, ann_files, input_img_dir, save_dir):
             cat_img_count = np.zeros(len(sel_catNms), dtype=np.int16)
             # Get image filename
             file_name = coco.imgs[img]['file_name']
-            input_img = cv2.imread(input_img_dir + '/' + file_name)
+            if os.name == 'nt':
+                input_img = cv2.imread(input_img_dir + '/' + file_name)
+            else:
+                input_img = cv2.imread(file_name)
             width = coco.imgs[img]['width']
             height = coco.imgs[img]['height']
             annotations = coco.loadAnns(ann_ids)
@@ -96,10 +119,19 @@ def coco2classification(cat_names, ann_files, input_img_dir, save_dir):
                 if crop_img is None:
                     continue
                 else:
-                    split_file = file_name.split('.')
-                    suffix_add = split_file[0] + '_' + str(cat_img_count[sel_cat_idx])
-                    new_file_name = suffix_add + '.jpg'
-                    cv2.imwrite(save_dir + '/' + cat_name + '/' + new_file_name, crop_img)
+                    resized_img = resize_image(crop_img, [224, 224])
+                    if os.name == 'nt':
+                        split_file = file_name.split('.')
+                        suffix_add = split_file[0] + '_' + str(cat_img_count[sel_cat_idx])
+                        new_file_name = suffix_add + '.jpg'
+
+                        cv2.imwrite(save_dir + '/' + cat_name + '/' + new_file_name, resized_img)
+                    else:
+                        split_file = file_name.split('/')
+                        split_file = split_file[-1].split('.')
+                        suffix_add = split_file[0] + '_' + str(cat_img_count[sel_cat_idx])
+                        new_file_name = suffix_add + '.jpg'
+                        cv2.imwrite(save_dir + '/' + cat_name + '/' + new_file_name, resized_img)
 
 
 if __name__ == '__main__':
@@ -128,7 +160,12 @@ if __name__ == '__main__':
 
     for d_set in tqdm.tqdm(dataset_list):
         # annFile = '%s/annotations/instances_%s.json' % (dataDir, segmentType)
-        annFile = 'model_data/datasets/1/coco/%s/dataset.json' % d_set
+        print(os.listdir(os.getcwd() + '/model_data/datasets/1/coco'))
+        if os.name == 'nt':
+            annFile = os.getcwd() + '/model_data/datasets/1/coco/%s/dataset.json' % d_set
+        else:
+            annFile = os.getcwd() + '/model_data/datasets/1/coco/%s.json' % d_set
+
         img_dir = os.getcwd() + '/model_data/datasets/1/' + d_set
         if not os.path.exists(output_dir + '/' + d_set):
             os.mkdir(output_dir + '/' + d_set)
