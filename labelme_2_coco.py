@@ -9,8 +9,10 @@ if os.name == 'nt':
 else:
     os.chdir(r"../")
 
-data_dir = os.getcwd() + "/model_data/datasets/1"
-save_dir = os.getcwd() + "/model_data/datasets/1"
+dataset_dir = '2'
+
+data_dir = os.getcwd() + "/model_data/datasets/" + dataset_dir
+save_dir = os.getcwd() + "/model_data/datasets/" + dataset_dir
 
 train_folder = data_dir + "/train"
 list_train = os.listdir(train_folder)

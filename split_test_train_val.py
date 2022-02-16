@@ -3,8 +3,6 @@ import os
 import shutil
 import tqdm
 
-import cv2
-
 
 def copy_data(input_loc, output_loc, json_or_img):
     if json_or_img == 'json':
@@ -70,7 +68,9 @@ if __name__ == '__main__':
         os.chdir(r"..\\")
     else:
         os.chdir(r"../")
-    input_image_dir = os.getcwd() + '/model_data/datasets/1/merge_files/images'
-    input_annotation_dir = os.getcwd() + '/model_data/datasets/1/merge_files/annotation'
-    output_dir = os.getcwd() + '/model_data/datasets/1/'
+    dataset_dir = '2'
+
+    input_image_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/merge_files/images'
+    input_annotation_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/merge_files/annotation'
+    output_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/'
     create_test_train_val(input_image_dir, input_annotation_dir, output_dir)
