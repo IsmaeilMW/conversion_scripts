@@ -5,7 +5,7 @@ from tqdm import tqdm
 os.chdir(r"..\\")
 
 video_path = 'live_feed/camera_1/'
-video_segment = 'video_4'
+video_segment = 'video_9'
 segment_list = os.listdir(os.getcwd() + '/' + video_path + video_segment)
 
 
@@ -43,7 +43,7 @@ if __name__ == '__main__':
         file_list_output_dir = os.listdir(output_dir)
         file_list_output_dir = sorted(file_list_output_dir, reverse=True)
         frame_count = 0
-        multiple_factor = 30
+        multiple_factor = 15
         if len(file_list_output_dir) > 0:
             last_file_name = file_list_output_dir[0].split('.')
             frame_count = int(last_file_name[0]) * multiple_factor

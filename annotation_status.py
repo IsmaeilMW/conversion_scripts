@@ -26,7 +26,7 @@ def count_annotation(json_path):
 
 
 def annotation_status(data_dir):
-    dir_list = ['v1']
+    dir_list = ['video_1_modified', 'video_2_modified', 'video_3_modified']
 
     for d_list in dir_list:
         file_list = os.listdir(data_dir + '/' + d_list)
