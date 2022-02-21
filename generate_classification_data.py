@@ -11,6 +11,9 @@ import numpy as np
 import tqdm
 from utils.classification_utils import crop_classification_1
 
+threshold_height = 64
+threshold_width = 128
+
 
 def check_boundary():
     pass
@@ -74,7 +77,10 @@ def coco2classification(cat_names, ann_files, input_img_dir, save_dir):
                 if crop_img is None:
                     continue
                 else:
-                    resized_img = resize_image(crop_img, [224, 224])
+                    if crop_img.shape[0] < threshold_height or crop_img.shape[1] < threshold_width:
+                        continue
+                    # resized_img = resize_image(crop_img, [224, 224])
+                    resized_img = crop_img.copy()
                     if os.name == 'nt':
                         split_file = file_name.split('.')
                         suffix_add = split_file[0] + '_' + str(cat_img_count[sel_cat_idx])
