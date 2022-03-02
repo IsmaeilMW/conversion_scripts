@@ -102,7 +102,7 @@ if __name__ == '__main__':
         os.chdir(r"../")
 
     dataset_list = ['train', 'test', 'val']
-    dataset_dir = '2'
+    dataset_dir = '3'
     output_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/classification'
 
     # Check if old file exits.

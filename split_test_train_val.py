@@ -68,7 +68,7 @@ if __name__ == '__main__':
         os.chdir(r"..\\")
     else:
         os.chdir(r"../")
-    dataset_dir = '2'
+    dataset_dir = '3'
 
     input_image_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/merge_files/images'
     input_annotation_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/merge_files/annotation'
