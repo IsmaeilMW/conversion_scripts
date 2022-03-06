@@ -119,6 +119,8 @@ if __name__ == '__main__':
                   "catering_vehicle_connected", "pca_connected", "pushback_tug_connected",
                   "cargo_loader_disconnected", "jet_bridge_disconnected", "belt_loader_disconnected",
                   "catering_vehicle_disconnected", "pca_disconnected", "pushback_tug_disconnected"]
+    # sel_catNms = ["catering_vehicle_connected", "pca_connected",
+    #               "catering_vehicle_disconnected", "pca_disconnected"]
 
     for d_set in tqdm.tqdm(dataset_list):
         # annFile = '%s/annotations/instances_%s.json' % (dataDir, segmentType)
