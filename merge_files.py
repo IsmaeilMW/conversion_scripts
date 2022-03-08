@@ -21,6 +21,10 @@ def copy_files(source_file, des_file):
     shutil.copy2(source_file, des_file)
 
 
+def move_files(source_file, des_file):
+    os.rename(source_file, des_file)
+
+
 def rename_and_copy_files(source_file, des_file):
     os.rename(source_file, des_file)
 
@@ -44,8 +48,10 @@ def merge_files(img_dir, ann_dir, save_dir):
             src_img = img_dir + '/' + img_dir_name + '/' + img_file_name
             src_ann = ann_dir + '/' + ann_dir_name + '/' + ann_file_name
             if "_" in current_file_id:
-                copy_files(src_img, save_dir + '/' + 'images/' + img_file_name)
-                copy_files(src_ann, save_dir + '/' + 'annotation/' + ann_file_name)
+                # copy_files(src_img, save_dir + '/' + 'images/' + img_file_name)
+                # copy_files(src_ann, save_dir + '/' + 'annotation/' + ann_file_name)
+                move_files(src_img, save_dir + '/' + 'images/' + img_file_name)
+                move_files(src_ann, save_dir + '/' + 'annotation/' + ann_file_name)
             else:
                 new_file_id = 'v' + dir_id + '_' + current_file_id
                 img_file_name = new_file_id + '.jpg'
@@ -55,7 +61,7 @@ def merge_files(img_dir, ann_dir, save_dir):
 
 
 if __name__ == '__main__':
-    dataset_dir = '3'
+    dataset_dir = '4'
     root_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir
     output_dir = root_dir + '/merge_files'
     create_dir(output_dir)

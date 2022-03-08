@@ -9,7 +9,7 @@ if os.name == 'nt':
 else:
     os.chdir(r"../")
 
-dataset_dir = '3'
+dataset_dir = '4'
 
 data_dir = os.getcwd() + "/model_data/datasets/" + dataset_dir
 save_dir = os.getcwd() + "/model_data/datasets/" + dataset_dir

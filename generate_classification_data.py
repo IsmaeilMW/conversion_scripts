@@ -102,7 +102,7 @@ if __name__ == '__main__':
         os.chdir(r"../")
 
     dataset_list = ['train', 'test', 'val']
-    dataset_dir = '3'
+    dataset_dir = '4'
     output_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/classification'
 
     # Check if old file exits.
@@ -119,8 +119,10 @@ if __name__ == '__main__':
     #               "catering_vehicle_connected", "pca_connected", "pushback_tug_connected",
     #               "cargo_loader_disconnected", "jet_bridge_disconnected", "belt_loader_disconnected",
     #               "catering_vehicle_disconnected", "pca_disconnected", "pushback_tug_disconnected"]
-    sel_catNms = ["catering_vehicle_connected", "jet_bridge_connected",
-                  "catering_vehicle_disconnected", "jet_bridge_disconnected"]
+    sel_catNms = ["cargo_loader_connected", "cargo_loader_disconnected",
+                  "pca_connected", "pca_disconnected",
+                  "pushback_tug_disconnected", "pushback_tug_connected",
+                  "belt_loader_connected", "belt_loader_disconnected", ]
 
     for d_set in tqdm.tqdm(dataset_list):
         # annFile = '%s/annotations/instances_%s.json' % (dataDir, segmentType)

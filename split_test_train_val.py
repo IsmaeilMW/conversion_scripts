@@ -11,6 +11,10 @@ def copy_data(input_loc, output_loc, json_or_img):
         shutil.copy2(input_loc, output_loc)
 
 
+def move_files(source_file, des_file):
+    os.rename(source_file, des_file)
+
+
 def change_path_in_json(json_path, save_dir):
     with open(json_path, 'r') as json_file:
         json_data = json.load(json_file)
@@ -48,17 +52,23 @@ def create_test_train_val(in_image_dir, in_annotation_dir, save_dir):
         if count % 10 == 0:
             if val_count >= test_count:
                 # pass to validation
-                copy_data(in_image_dir + '/' + file_name, save_dir + 'test', 'img')
+                move_files(in_image_dir + '/' + file_name, save_dir + 'test' + '/' + file_name)
                 copy_data(in_annotation_dir + '/' + ann_file_name, save_dir + 'test', 'json')
+
+                # copy_data(in_image_dir + '/' + file_name, save_dir + 'test', 'img')
                 test_count += 1
             elif test_count > val_count:
-                copy_data(in_image_dir + '/' + file_name, save_dir + 'val', 'img')
+                move_files(in_image_dir + '/' + file_name, save_dir + 'val' + '/' + file_name)
                 copy_data(in_annotation_dir + '/' + ann_file_name, save_dir + 'val', 'json')
+
+                # copy_data(in_image_dir + '/' + file_name, save_dir + 'val', 'img')
                 val_count += 1
 
         else:
-            copy_data(in_image_dir + '/' + file_name, save_dir + 'train', 'img')
+            move_files(in_image_dir + '/' + file_name, save_dir + 'train' '/' + file_name)
             copy_data(in_annotation_dir + '/' + ann_file_name, save_dir + 'train', 'json')
+
+            # copy_data(in_image_dir + '/' + file_name, save_dir + 'train', 'img')
 
         count += 1
 
@@ -68,7 +78,7 @@ if __name__ == '__main__':
         os.chdir(r"..\\")
     else:
         os.chdir(r"../")
-    dataset_dir = '3'
+    dataset_dir = '4'
 
     input_image_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/merge_files/images'
     input_annotation_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/merge_files/annotation'
