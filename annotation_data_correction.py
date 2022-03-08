@@ -69,7 +69,7 @@ def create_directory(save_dir):
 
 
 def resize_image_annotation(data_dir, save_dir, new_h_w):
-    dir_list = ['video_9', 'video_10']
+    dir_list = ['video_5', 'video_9', 'video_7']
     last_file_id, last_file_ext = 0, '.json'
     start_file_id = 0
 
@@ -88,6 +88,8 @@ def resize_image_annotation(data_dir, save_dir, new_h_w):
                 file_id, file_ext = file.split('.')
                 if '_' in file_id:
                     file_id = file_id.split('_')[-1]
+                if '_' in last_file_id:
+                    last_file_id = last_file_id.split('_')[-1]
                 # line change shift+Alt+ [up or down]
                 # if start_file_id < int(file_id) <= last_file_id:
                 if int(file_id) >= int(last_file_id):

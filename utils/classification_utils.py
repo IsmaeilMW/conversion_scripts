@@ -2,10 +2,10 @@ import cv2
 
 buffer_pixel = 50
 buffer_1 = {
-    'jet_bridge': [0.75, 0.1, 0, 0],
+    'jet_bridge': [0.5, 0.1, 0, 0],
     'cargo_loader': [-0.5, 0.25, 0.5, 0],
     'belt_loader': [-0.5, 0.25, 0.75, 0],
-    'catering_vehicle': [0, 0, 0.5, -0.5],
+    'catering_vehicle': [0, 0, 0.30, -0.5],
     'pca': [0.5, 0.5, 0, 0.5],
     'pushback_tug': [0, 0.5, 0.25, 0]
 }
