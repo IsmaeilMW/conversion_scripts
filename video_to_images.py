@@ -5,7 +5,7 @@ from tqdm import tqdm
 os.chdir(r"..\\")
 
 video_path = 'live_feed/camera_1/'
-video_segment = 'video_9'
+video_segment = 'video_14'
 segment_list = os.listdir(os.getcwd() + '/' + video_path + video_segment)
 
 
