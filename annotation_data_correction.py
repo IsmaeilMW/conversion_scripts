@@ -69,8 +69,9 @@ def create_directory(save_dir):
 
 
 def resize_image_annotation(data_dir, save_dir, new_h_w):
-    dir_list = ['video_5', 'video_9', 'video_7']
+    dir_list = ['video_6']
     last_file_id, last_file_ext = 0, '.json'
+    first_file_id, first_file_ext = 0, '.json'
     start_file_id = 0
 
     for d_list in dir_list:
@@ -80,7 +81,9 @@ def resize_image_annotation(data_dir, save_dir, new_h_w):
         sorted_files = sorted(output_dir_files, reverse=True)
         if len(sorted_files) > 0:
             last_file_name = sorted_files[0]
+            first_file_name = sorted_files[-1]
             last_file_id, last_file_ext = last_file_name.split('.')
+            first_file_id, first_file_ext = first_file_name.split('.')
             # last_file_id = 1993
             # start_file_id = 724
         for file in tqdm.tqdm(file_list):
@@ -90,9 +93,15 @@ def resize_image_annotation(data_dir, save_dir, new_h_w):
                     file_id = file_id.split('_')[-1]
                 if '_' in last_file_id:
                     last_file_id = last_file_id.split('_')[-1]
+                if '_' in first_file_id:
+                    first_file_id = first_file_id.split('_')[-1]
                 # line change shift+Alt+ [up or down]
                 # if start_file_id < int(file_id) <= last_file_id:
                 if int(file_id) >= int(last_file_id):
+                    file_path = os.path.join(data_dir + '/' + d_list + '/' + file)
+                    # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
+                    change_json_data(file_path, save_dir + '/' + d_list + '_modified', new_h_w, d_list, file)
+                if int(file_id) < int(first_file_id):
                     file_path = os.path.join(data_dir + '/' + d_list + '/' + file)
                     # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
                     change_json_data(file_path, save_dir + '/' + d_list + '_modified', new_h_w, d_list, file)
