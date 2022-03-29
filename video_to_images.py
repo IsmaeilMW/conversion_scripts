@@ -4,8 +4,8 @@ from tqdm import tqdm
 
 os.chdir(r"..\\")
 
-video_path = 'live_feed/camera_1/'
-video_segment = 'video_14'
+video_path = 'live_feed/gate_16/'
+video_segment = 'rac_g16_video_2'
 segment_list = os.listdir(os.getcwd() + '/' + video_path + video_segment)
 
 
@@ -18,8 +18,10 @@ def video_to_frames(video, path_output_dir, count):
             count += 1
             if count % multiple_factor == 0:
                 value = count // multiple_factor
+                split_segment = video_segment.split('_')
+                airport_w_stand = split_segment[0] + '_' + split_segment[1]
                 segment_num = video_segment.split('_')[-1]
-                value = 'v' + segment_num + '_' + str(value).zfill(6)
+                value = airport_w_stand + '_' + 'v' + segment_num + '_' + str(value).zfill(6)
                 cv2.imwrite(os.path.join(path_output_dir, value + '.jpg'), image)
                 # print(value)
             # Display the resulting frame
