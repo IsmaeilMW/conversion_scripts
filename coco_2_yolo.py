@@ -103,7 +103,8 @@ if __name__ == '__main__':
     else:
         os.chdir(r"../")
     dataset_list = ['train', 'test', 'val']
-    output_dir = os.getcwd() + '/model_data/datasets/1/detection/yolo/'
+    dataset_dir = '4'
+    output_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/detection/yolo/'
     req_height = 720
     req_width = 1280
 
@@ -123,11 +124,11 @@ if __name__ == '__main__':
                      "baggage_trailor", "chocks_off", "belt_loader_version2", "fwd_cargo_door_open"]
     sel_catNms = ["cargo_loader", "jet_bridge", "belt_loader",
                   "catering_vehicle", "pca",
-                  "aircraft_front", "pushback_tug"]
+                  "airplane_front", "pushback_tug"]
 
     for d_set in tqdm.tqdm(dataset_list):
-        annFile = os.getcwd() + '/model_data/datasets/1/coco/%s/dataset.json' % d_set
-        imgFile = os.getcwd() + '/model_data/datasets/1/' + d_set
+        annFile = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/coco/%s/dataset.json' % d_set
+        imgFile = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/' + d_set
         if os.path.isdir(output_dir + d_set):
             print('Labels folder already exists - exiting to prevent badness')
         else:
