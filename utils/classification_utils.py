@@ -1,7 +1,6 @@
-import cv2
 
-buffer_pixel = 50
 buffer_1 = {
+    'airplane_front': [0, 0, 0, 0],
     'jet_bridge': [0.5, 0.1, 0, 0],
     'cargo_loader': [-0.25, 0.25, 0.5, 0],
     'belt_loader': [-0.25, 0.5, 0.75, 0.1],
@@ -12,7 +11,7 @@ buffer_1 = {
 
 
 def crop_classification_1(img, bbox, cat_name):
-    if 'connected' or 'disconnected' in cat_name:
+    if ('connected' or 'disconnected') in cat_name:
         split_name = cat_name.split('_')[:-1]
         cat_name = '_'.join(split_name)
 
