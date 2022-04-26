@@ -61,7 +61,7 @@ def merge_files(img_dir, ann_dir, save_dir):
 
 
 if __name__ == '__main__':
-    dataset_dir = '4'
+    dataset_dir = '5'
     root_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir
     output_dir = root_dir + '/merge_files'
     create_dir(output_dir)

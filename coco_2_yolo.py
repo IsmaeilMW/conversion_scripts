@@ -103,7 +103,7 @@ if __name__ == '__main__':
     else:
         os.chdir(r"../")
     dataset_list = ['train', 'test', 'val']
-    dataset_dir = '4'
+    dataset_dir = '5'
     output_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/detection/yolo/'
     req_height = 720
     req_width = 1280
