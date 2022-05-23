@@ -39,7 +39,7 @@ def change_json_data(json_path, save_dir, new_h_w, train_val, file_name):
             if save_dir.split('/')[-1] == 'image_w_ann':
                 img_path = file_name.split('.')[0] + '.jpg'
             else:
-                img_path = '../../images/' + train_val + '/' + file_name.split('.')[0] + '.jpg'
+                img_path = '../../../../images/' + train_val + '/' + file_name.split('.')[0] + '.jpg'
 
         json_data['imagePath'] = img_path
         json_data['imageHeight'] = new_h_w[0]
@@ -69,15 +69,17 @@ def create_directory(save_dir):
 
 
 def resize_image_annotation(data_dir, save_dir, new_h_w):
-    dir_list = ['rac_g23_video_15']
+    dir_list = ['rac_g12_video_1']
+    version_dir = 'annotation_1'
     last_file_id, last_file_ext = '0', '.json'
     first_file_id, first_file_ext = '0', '.json'
     start_file_id = 0
 
     for d_list in dir_list:
-        create_directory(save_dir + '/' + d_list + '_modified')
-        file_list = os.listdir(data_dir + '/' + d_list)
-        output_dir_files = os.listdir(data_dir + '/' + d_list + '_modified')
+        create_directory(save_dir + '/' + d_list)
+        create_directory(save_dir + '/' + d_list + '/' + version_dir)
+        file_list = os.listdir(data_dir + '/' + d_list + '/' + version_dir)
+        output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + version_dir)
         sorted_files = sorted(output_dir_files, reverse=True)
         if len(sorted_files) > 0:
             last_file_name = sorted_files[0]
@@ -98,13 +100,13 @@ def resize_image_annotation(data_dir, save_dir, new_h_w):
                 # line change shift+Alt+ [up or down]
                 # if start_file_id < int(file_id) <= last_file_id:
                 if int(file_id) >= int(last_file_id):
-                    file_path = os.path.join(data_dir + '/' + d_list + '/' + file)
+                    file_path = os.path.join(data_dir + '/' + d_list + '/' + version_dir + '/' + file)
                     # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
-                    change_json_data(file_path, save_dir + '/' + d_list + '_modified', new_h_w, d_list, file)
+                    change_json_data(file_path, save_dir + '/' + d_list + '/' + version_dir, new_h_w, d_list, file)
                 if int(file_id) < int(first_file_id):
-                    file_path = os.path.join(data_dir + '/' + d_list + '/' + file)
+                    file_path = os.path.join(data_dir + '/' + d_list + '/' + version_dir + '/' + file)
                     # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
-                    change_json_data(file_path, save_dir + '/' + d_list + '_modified', new_h_w, d_list, file)
+                    change_json_data(file_path, save_dir + '/' + d_list + '/' + version_dir, new_h_w, d_list, file)
                 else:
                     continue
             # else:
@@ -114,7 +116,7 @@ def resize_image_annotation(data_dir, save_dir, new_h_w):
 
 if __name__ == '__main__':
     os.chdir(r"..\\")
-    input_dir = os.getcwd() + '/annotation'
-    output_dir = os.getcwd() + '/annotation'
+    input_dir = os.getcwd() + '/annotation/received'
+    output_dir = os.getcwd() + '/annotation/verified'
     new_h, new_w = 1080, 1920
     resize_image_annotation(input_dir, output_dir, [new_h, new_w])
