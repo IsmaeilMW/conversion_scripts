@@ -4,9 +4,10 @@ from tqdm import tqdm
 
 os.chdir(r"..\\")
 
-video_path = 'live_feed/gate_12/'
-video_segment = 'rac_g12_video_2'
+video_path = 'live_feed/gate_23/'
+video_segment = 'rac_g23_video_19'
 segment_list = os.listdir(os.getcwd() + '/' + video_path + video_segment)
+segment_list = sorted(segment_list, reverse=False)
 
 
 def video_to_frames(video, path_output_dir, count):
@@ -45,7 +46,7 @@ if __name__ == '__main__':
         file_list_output_dir = os.listdir(output_dir)
         file_list_output_dir = sorted(file_list_output_dir, reverse=True)
         frame_count = 0
-        multiple_factor = 30
+        multiple_factor = 25
         if len(file_list_output_dir) > 0:
             last_file_name = file_list_output_dir[0].split('.')
             frame_count = int(last_file_name[0]) * multiple_factor

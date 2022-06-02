@@ -69,8 +69,8 @@ def create_directory(save_dir):
 
 
 def resize_image_annotation(data_dir, save_dir, new_h_w):
-    dir_list = ['rac_g12_video_1']
-    version_dir = 'annotation_1'
+    dir_list = ['video_5']
+    version_dir = 'annotation_2'
     last_file_id, last_file_ext = '0', '.json'
     first_file_id, first_file_ext = '0', '.json'
     start_file_id = 0
