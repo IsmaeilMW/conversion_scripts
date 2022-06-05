@@ -26,7 +26,7 @@ def count_annotation(json_path):
 
 
 def annotation_status(data_dir):
-    dir_list = ['video_6/combine_1_2']
+    dir_list = ['video_5/combine_1_2', 'video_6/combine_1_2']
 
     for d_list in dir_list:
         file_list = os.listdir(data_dir + '/' + d_list)
@@ -35,7 +35,7 @@ def annotation_status(data_dir):
                 file_path = os.path.join(data_dir + '/' + d_list + '/' + file)
                 count_annotation(file_path)
     print("Total annotation: ", np.sum(label_list['count']))
-    print(pd.DataFrame(label_list))
+    print(pd.DataFrame(label_list).sort_values(by='name'))
 
 
 if __name__ == '__main__':

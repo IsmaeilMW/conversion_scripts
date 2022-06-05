@@ -74,5 +74,5 @@ if __name__ == '__main__':
     input_dir = os.getcwd() + '/annotation/verified'
     output_dir = os.getcwd() + '/annotation/verified'
     merge_data = MergeAnnData(input_dir, output_dir)
-    merge_data.merge_data('video_5', 'annotation_1', 'annotation_2')
+    merge_data.merge_data('video_6', 'annotation_1', 'annotation_2')
     # merge_data.change_img_path('video_6', 'annotation_1')
