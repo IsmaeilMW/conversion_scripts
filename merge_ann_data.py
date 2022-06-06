@@ -65,8 +65,9 @@ class MergeAnnData:
                 return ValueError(f"{ann_dir} does not exits")
 
         file_list_m = os.listdir(self.input_loc + '/' + video_dir + '/' + ann_master)
+        file_list_s = os.listdir(self.input_loc + '/' + video_dir + '/' + ann_slave)
         for file_m in tqdm.tqdm(file_list_m):
-            if file_m.endswith('.json'):
+            if file_m.endswith('.json') and (file_m in file_list_s):
                 self.combine_json_data(video_dir, ann_master, ann_slave, combine_dir_name, file_m)
 
 
@@ -76,8 +77,8 @@ if __name__ == '__main__':
     os.chdir(r"..\\")
     input_dir = os.getcwd() + '/' + my_dict['annotation']['input_dir']
     output_dir = os.getcwd() + '/' + my_dict['annotation']['output_dir']
-    video_file = my_dict['merge_ann_data']['video_file']
-    annotation_files = my_dict['merge_ann_data']['annotation_versions']
+    video_file = my_dict['annotation']['merge_ann_data']['video_file']
+    annotation_files = my_dict['annotation']['merge_ann_data']['annotation_versions']
     merge_data = MergeAnnData(input_dir, output_dir)
     merge_data.merge_data(video_file, annotation_files[0], annotation_files[1])
     # merge_data.change_img_path('video_6', 'annotation_1')

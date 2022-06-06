@@ -52,16 +52,16 @@ dataset_dir: 7
 dataset_list: train, test, val
 
 annotation:
-  input_dir: annotation/verified
+  input_dir: annotation/received
   output_dir: annotation/verified
 
   ann_data_correction:
     video_files:
-      - video_9
+      - video_4
     ann_label_ver: annotation_1
 
   merge_ann_data:
-    video_file: video_9
+    video_file: video_4
     annotation_versions:
       - annotation_1
       - annotation_2
