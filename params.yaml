@@ -1,0 +1,61 @@
+integer:
+  2
+
+labels:
+  event_cat:
+    - cargo_loader
+    - jet_bridge
+    - belt_loader
+    - catering_vehicle
+    - pca
+    - pushback_tug
+    - pushback_tug_version2
+    - belt_loader_version2
+    - fueling_truck
+  non_event_cat:
+    - airplane
+    - airplane_front
+    - baggage
+    - tow_tractor
+    - chocks_on
+    - baggage_trailer
+    - chocks_off
+    - fwd_cargo_door_open
+    - cargo_door_opener_ladder
+    - bus
+    - car
+    - van
+    - suv
+    - truck
+  sel_catNms:
+    - cargo_loader
+    - jet_bridge
+    - belt_loader
+    - catering_vehicle
+    - pca
+    - airplane_front
+    - pushback_tug
+    - bus
+    - car
+    - van
+    - suv
+    - truck
+    - baggage
+    - tow_tractor
+    - chocks_on
+    - baggage_trailer
+    - chocks_off
+    - fwd_cargo_door_open
+    - cargo_door_opener_ladder
+
+dataset_dir: 7
+dataset_list: train, test, val
+
+annotation:
+  input_dir: annotation/received
+  output_dir: annotation/verified
+
+annotation_data_correction:
+  dir_list:
+    - video_9
+  version_dir: annotation_1
