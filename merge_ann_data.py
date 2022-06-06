@@ -13,6 +13,7 @@ import json
 import os
 import shutil
 import tqdm
+import yaml
 
 
 class MergeAnnData:
@@ -70,9 +71,13 @@ class MergeAnnData:
 
 
 if __name__ == '__main__':
+    with open('params.yaml') as f:
+        my_dict = yaml.safe_load(f)
     os.chdir(r"..\\")
-    input_dir = os.getcwd() + '/annotation/verified'
-    output_dir = os.getcwd() + '/annotation/verified'
+    input_dir = os.getcwd() + '/' + my_dict['annotation']['input_dir']
+    output_dir = os.getcwd() + '/' + my_dict['annotation']['output_dir']
+    video_file = my_dict['merge_ann_data']['video_file']
+    annotation_files = my_dict['merge_ann_data']['annotation_versions']
     merge_data = MergeAnnData(input_dir, output_dir)
-    merge_data.merge_data('video_6', 'annotation_1', 'annotation_2')
+    merge_data.merge_data(video_file, annotation_files[0], annotation_files[1])
     # merge_data.change_img_path('video_6', 'annotation_1')

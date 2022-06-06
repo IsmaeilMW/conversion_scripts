@@ -86,9 +86,9 @@ def resize_image_annotation(data_dir, save_dir, dir_list, ver_dir):
                 if int(file_id) >= int(last_file_id):
                     file_path = os.path.join(data_dir + '/' + d_list + '/' + ver_dir + '/' + file)
                     # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
-                    # change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir, d_list, file)
-                    change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir + '_1',
-                                     d_list, file)
+                    change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir, d_list, file)
+                    # change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir + '_1',
+                    #                  d_list, file)
                 if int(file_id) < int(first_file_id):
                     file_path = os.path.join(data_dir + '/' + d_list + '/' + ver_dir + '/' + file)
                     # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
@@ -106,6 +106,6 @@ if __name__ == '__main__':
     os.chdir(r"..\\")
     input_dir = os.getcwd() + '/' + my_dict['annotation']['input_dir']
     output_dir = os.getcwd() + '/' + my_dict['annotation']['output_dir']
-    change_files_dir = my_dict['annotation_data_correction']['dir_list']
-    version_dir = my_dict['annotation_data_correction']['version_dir']
+    change_files_dir = my_dict['annotation']['ann_data_correction']['video_files']
+    version_dir = my_dict['annotation']['ann_data_correction']['ann_label_ver']
     resize_image_annotation(input_dir, output_dir, change_files_dir, version_dir)
