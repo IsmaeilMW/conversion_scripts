@@ -52,12 +52,14 @@ dataset_dir: 7
 dataset_list: train, test, val
 
 annotation:
-  input_dir: annotation/received
+  input_dir: annotation/verified
   output_dir: annotation/verified
 
   ann_data_correction:
     video_files:
-      - video_4
+      - video_1
+      - video_2
+      - video_3
     ann_label_ver: annotation_1
 
   merge_ann_data:
@@ -65,3 +67,9 @@ annotation:
     annotation_versions:
       - annotation_1
       - annotation_2
+
+video:
+  video_path: live_feed/gate_23/
+  video_segment: rac_g23_video_17
+  save_img_dir: images
+  multiple_factor: 25

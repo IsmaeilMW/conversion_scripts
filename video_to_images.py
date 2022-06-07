@@ -1,13 +1,7 @@
 import cv2
 import os
 from tqdm import tqdm
-
-os.chdir(r"..\\")
-
-video_path = 'live_feed/gate_23/'
-video_segment = 'rac_g23_video_19'
-segment_list = os.listdir(os.getcwd() + '/' + video_path + video_segment)
-segment_list = sorted(segment_list, reverse=False)
+import yaml
 
 
 def video_to_frames(video, path_output_dir, count):
@@ -37,22 +31,31 @@ def video_to_frames(video, path_output_dir, count):
 
 
 if __name__ == '__main__':
-    if not os.path.exists(os.getcwd() + '/images/' + video_segment):
-        os.mkdir(os.getcwd() + '/images/' + video_segment)
+    with open('params.yaml') as f:
+        my_dict = yaml.safe_load(f)
+    os.chdir(r"..\\")
+
+    video_path = os.getcwd() + '/' + my_dict['video']['video_path']
+    video_segment = my_dict['video']['video_segment']
+    segment_list = os.listdir(video_path + '/' + video_segment)
+    segment_list = sorted(segment_list, reverse=False)
+    segment_list = [segment for segment in segment_list if segment.endswith('.mp4')]
+    if not os.path.exists(os.getcwd() + '/' + my_dict['video']['save_img_dir'] + '/' + video_segment):
+        os.mkdir(os.getcwd() + '/' + my_dict['video']['save_img_dir'] + '/' + video_segment)
     combine_flag = True
 
     if combine_flag:
-        output_dir = os.getcwd() + '/images/' + video_segment
+        output_dir = os.getcwd() + '/' + my_dict['video']['save_img_dir'] + '/' + video_segment
         file_list_output_dir = os.listdir(output_dir)
         file_list_output_dir = sorted(file_list_output_dir, reverse=True)
         frame_count = 0
-        multiple_factor = 25
+        multiple_factor = my_dict['video']['multiple_factor']
         if len(file_list_output_dir) > 0:
             last_file_name = file_list_output_dir[0].split('.')
             frame_count = int(last_file_name[0]) * multiple_factor
 
         for file in tqdm(segment_list):
-            video_file = os.path.join(os.getcwd() + '/' + video_path + video_segment, file)
+            video_file = os.path.join(video_path + '/' + video_segment, file)
             last_frame_count = video_to_frames(video_file, output_dir, frame_count)
             frame_count = last_frame_count
 
