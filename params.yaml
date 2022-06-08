@@ -50,7 +50,10 @@ training:
       - cargo_door_opener_ladder
 
   save_dir: datasets/8
-  dataset_list: train, test, val
+  dataset_list:
+    - train
+    - test
+    - val
   req_height: 720
   req_width: 1280
 

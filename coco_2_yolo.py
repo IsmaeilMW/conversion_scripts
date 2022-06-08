@@ -8,6 +8,8 @@ from pycocotools.coco import COCO
 import shutil
 import cv2
 import tqdm
+import yaml
+from pathlib import Path
 
 
 def resize_image(img_file, height_width):
@@ -63,15 +65,15 @@ def coco2yolo(cat_names, ann_files, img_files, r_height_width, save_dir):
 
             "check whether resize is required"
             if o_height_width[0] == r_height_width[0]:
-                copy_files(img_files + '/' + img_fname, save_dir + '/' + img_fname)
+                copy_files(img_files / img_fname, save_dir / img_fname)
             else:
                 resize_flag = True
-                img = cv2.imread(img_files + '/' + img_fname)
+                img = cv2.imread(Path(img_files).as_posix() + '/' + img_fname)
                 resize_img = resize_image(img, r_height_width)
-                cv2.imwrite(save_dir + '/' + img_fname, resize_img)
+                cv2.imwrite(Path(save_dir).as_posix() + '/' + img_fname, resize_img)
 
             # open text file
-            with open(save_dir + '/' + img_fname.split('.')[0] + '.txt', 'w') as label_file:
+            with open(Path(save_dir).as_posix() + '/' + img_fname.split('.')[0] + '.txt', 'w') as label_file:
                 anns = coco.loadAnns(ann_ids)
                 for a in anns:
                     bbox = a['bbox']
@@ -98,15 +100,17 @@ def coco2yolo(cat_names, ann_files, img_files, r_height_width, save_dir):
 
 
 if __name__ == '__main__':
-    if os.name == 'nt':
-        os.chdir(r"..\\")
-    else:
-        os.chdir(r"../")
-    dataset_list = ['train', 'test', 'val']
-    dataset_dir = '5'
-    output_dir = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/detection/yolo/'
-    req_height = 720
-    req_width = 1280
+    with open('params.yaml') as f:
+        my_dict = yaml.safe_load(f)
+    FILE = Path(__file__).resolve()
+    ROOT = FILE.parents[1]
+    dataset_dir = my_dict['training']['save_dir']
+    root_dir = ROOT / dataset_dir
+    
+    dataset_list = my_dict['training']['dataset_list']
+    output_dir = root_dir / 'detection/yolo/'
+    req_height = my_dict['training']['req_height']
+    req_width = my_dict['training']['req_width']
 
     # Check if old file exits.
     if os.path.exists(output_dir):
@@ -118,19 +122,15 @@ if __name__ == '__main__':
     else:
         os.mkdir(output_dir)
 
-    event_cat = ["cargo_loader", "jet_bridge", "belt_loader", "catering_vehicle", "cargo_door_opener_ladder",
-                 "pca", "pushback_tug"]
-    non_event_cat = ["airplane", "aircraft_front", "pushback_tug", "baggage", "tow_tractor", "chocks_on",
-                     "baggage_trailor", "chocks_off", "belt_loader_version2", "fwd_cargo_door_open"]
-    sel_catNms = ["cargo_loader", "jet_bridge", "belt_loader",
-                  "catering_vehicle", "pca",
-                  "airplane_front", "pushback_tug"]
-
+    event_cat = my_dict['training']['labels']['event_cat']
+    non_event_cat = my_dict['training']['labels']['non_event_cat']
+    sel_catNms = my_dict['training']['labels']['sel_catNms']
+    
     for d_set in tqdm.tqdm(dataset_list):
-        annFile = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/coco/%s/dataset.json' % d_set
-        imgFile = os.getcwd() + '/model_data/datasets/' + dataset_dir + '/' + d_set
-        if os.path.isdir(output_dir + d_set):
+        annFile = Path(root_dir).as_posix() + '/coco/%s/dataset.json' % d_set
+        imgFile = root_dir / d_set
+        if os.path.isdir(output_dir / d_set):
             print('Labels folder already exists - exiting to prevent badness')
         else:
-            os.mkdir(output_dir + d_set)
-            coco2yolo(sel_catNms, annFile, imgFile, [req_height, req_width], output_dir + d_set)
+            os.mkdir(output_dir / d_set)
+            coco2yolo(sel_catNms, annFile, imgFile, [req_height, req_width], output_dir / d_set)

@@ -60,11 +60,11 @@ def resize_image_annotation(data_dir, save_dir, dir_list, ver_dir):
 
     for d_list in dir_list:
         create_directory(save_dir + '/' + d_list)
-        create_directory(save_dir + '/' + d_list + '/' + ver_dir)
-        # create_directory(save_dir + '/' + d_list + '/' + ver_dir + '_1')
+        # create_directory(save_dir + '/' + d_list + '/' + ver_dir)
+        create_directory(save_dir + '/' + d_list + '/' + ver_dir + '_1')
         file_list = os.listdir(data_dir + '/' + d_list + '/' + ver_dir)
-        output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir)
-        # output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir + '_1')
+        # output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir)
+        output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir + '_1')
         sorted_files = sorted(output_dir_files, reverse=True)
         if len(sorted_files) > 0:
             last_file_name = sorted_files[0]
@@ -87,9 +87,8 @@ def resize_image_annotation(data_dir, save_dir, dir_list, ver_dir):
                 if int(file_id) >= int(last_file_id):
                     file_path = os.path.join(data_dir + '/' + d_list + '/' + ver_dir + '/' + file)
                     # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
-                    change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir, d_list, file)
-                    # change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir + '_1',
-                    #                  d_list, file)
+                    # change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir, d_list, file)
+                    change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir + '_1', d_list, file)
                 if int(file_id) < int(first_file_id):
                     file_path = os.path.join(data_dir + '/' + d_list + '/' + ver_dir + '/' + file)
                     # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)

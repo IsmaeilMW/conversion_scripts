@@ -1,19 +1,17 @@
 import cv2
 import json
 import os
-
-os.chdir("..\\..\\")
-data_dir = '/yolov5/runs/detect/exp28/'
-list_file = os.listdir(os.getcwd() + data_dir)
+import yaml
+from pathlib import Path
 
 
-def check_on_image():
+def check_on_image(data_dir, file_id):
     # file_id = list_file[-1].split('.')[0]
-    file_id = 'rac_g23_v15_000001'
-    img = cv2.imread(os.getcwd() + data_dir + file_id + '.jpg')
+    # file_id = 'rac_g23_v15_000001'
+    img = cv2.imread(Path(data_dir).as_posix() + '/' + file_id + '.jpg')
     height, width = img.shape[:2]
     # height, width = 1080, 1920
-    with open(os.getcwd() + data_dir + '/labels/' + file_id + '.txt', 'r') as label_file:
+    with open(Path(data_dir).as_posix() + '/' + file_id + '.txt', 'r') as label_file:
         lines = label_file.readlines()
         for label_data in lines:
             label_data = label_data.split(" ")
@@ -30,7 +28,15 @@ def check_on_image():
 
 
 if __name__ == '__main__':
-    sel_catNms = ["cargo_loader", "jet_bridge", "belt_loader",
-                  "catering_vehicle", "pca",
-                  "airplane_front", "pushback_tug"]
-    check_on_image()
+    with open('params.yaml') as f:
+        my_dict = yaml.safe_load(f)
+    FILE = Path(__file__).resolve()
+    ROOT = FILE.parents[1]
+    dataset_dir = my_dict['training']['save_dir']
+    root_dir = ROOT / dataset_dir / 'detection/yolo/test'
+    file_name = 'v4_000001'
+
+    # data_dir = '/yolov5/runs/detect/exp28/'
+    # list_file = os.listdir(os.getcwd() + data_dir)
+    sel_catNms = my_dict['training']['labels']['sel_catNms']
+    check_on_image(root_dir, file_name)
