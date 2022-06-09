@@ -1,3 +1,8 @@
+"""
+annotation_count: Display the number of annotation belongs from each class..
+__author__: Mohammad Ismaeil.
+"""
+
 import json
 import os
 import tqdm
@@ -26,7 +31,7 @@ def count_annotation(json_path):
 
 
 def annotation_status(data_dir):
-    dir_list = ['video_5/combine_1_2', 'video_6/combine_1_2']
+    dir_list = ['video_6/v6_combine_1_2']
 
     for d_list in dir_list:
         file_list = os.listdir(data_dir + '/' + d_list)

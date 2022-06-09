@@ -1,5 +1,5 @@
 """coco2Yolo.py: Converts MS COCO annotation files to
-                  YOLO format bounding box label files
+                  YOLO format bounding box.
 __author__ = "Mohammad Ismaeil"
 """
 

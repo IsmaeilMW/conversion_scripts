@@ -1,3 +1,9 @@
+"""
+verify_yolo_data: Check the bbox after transformation from coco(Kitti, VOC) format.
+__author__: Mohammad Ismaeil.
+"""
+
+
 import cv2
 import json
 import os
