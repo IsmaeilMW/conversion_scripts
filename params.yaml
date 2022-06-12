@@ -63,13 +63,12 @@ annotation:
 
   ann_data_correction:
     video_files:
-      - video_1
-      - video_2
-      - video_3
+      - video_8
     ann_label_ver: annotation_1
+#    ann_save_ver: annotation_1_1
 
   merge_ann_data:
-    video_file: video_4
+    video_file: video_8
     annotation_versions:
       - annotation_1
       - annotation_2
