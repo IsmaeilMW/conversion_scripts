@@ -60,44 +60,21 @@ def resize_image_annotation(data_dir, save_dir, dir_list, ver_dir):
 
     for d_list in dir_list:
         create_directory(save_dir + '/' + d_list)
-        # create_directory(save_dir + '/' + d_list + '/' + ver_dir)
-        create_directory(save_dir + '/' + d_list + '/' + ver_dir + '_1')
-        file_list = os.listdir(data_dir + '/' + d_list + '/' + ver_dir)
-        # output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir)
-        output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir + '_1')
-        sorted_files = sorted(output_dir_files, reverse=True)
-        if len(sorted_files) > 0:
-            last_file_name = sorted_files[0]
-            first_file_name = sorted_files[-1]
-            last_file_id, last_file_ext = last_file_name.split('.')
-            first_file_id, first_file_ext = first_file_name.split('.')
-            # last_file_id = 1993
-            # start_file_id = 724
-        for file in tqdm.tqdm(file_list):
+        create_directory(save_dir + '/' + d_list + '/' + ver_dir)
+        # create_directory(save_dir + '/' + d_list + '/' + ver_dir + '_1')
+        input_dir_files = os.listdir(data_dir + '/' + d_list + '/' + ver_dir)
+        output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir)
+        # output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir + '_1')
+        missing_file_list = list(set(input_dir_files).difference(output_dir_files))
+        missing_file_list = sorted(missing_file_list, reverse=False)
+        for file in tqdm.tqdm(missing_file_list):
             if file.endswith('.json'):
-                file_id, file_ext = file.split('.')
-                if '_' in file_id:
-                    file_id = file_id.split('_')[-1]
-                if '_' in last_file_id:
-                    last_file_id = last_file_id.split('_')[-1]
-                if '_' in first_file_id:
-                    first_file_id = first_file_id.split('_')[-1]
                 # line change shift+Alt+ [up or down]
                 # if start_file_id < int(file_id) <= last_file_id:
-                if int(file_id) >= int(last_file_id):
-                    file_path = os.path.join(data_dir + '/' + d_list + '/' + ver_dir + '/' + file)
-                    # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
-                    # change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir, d_list, file)
-                    change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir + '_1', d_list, file)
-                if int(file_id) < int(first_file_id):
-                    file_path = os.path.join(data_dir + '/' + d_list + '/' + ver_dir + '/' + file)
-                    # file_path = os.path.join(data_dir + '/' + d_list + '_modified' + '/' + file)
-                    change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir, d_list, file)
-                else:
-                    continue
-            # else:
-            #     file_path = os.path.join(data_dir + '/' + d_list + '/' + file)
-            #     resize_images(file_path, save_dir + '/' + d_list + '_modified', new_h_w, d_list, file)
+                file_path = os.path.join(data_dir + '/' + d_list + '/' + ver_dir + '/' + file)
+                change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir, d_list, file)
+                # change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir + '_1', d_list, file)
+        print(f"Total files inside directory: {len(os.listdir(save_dir + '/' + d_list + '/' + ver_dir))}")
 
 
 if __name__ == '__main__':
