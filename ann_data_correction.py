@@ -53,18 +53,17 @@ def create_directory(save_dir):
         os.mkdir(save_dir)
 
 
-def resize_image_annotation(data_dir, save_dir, dir_list, ver_dir):
+def resize_image_annotation(data_dir, save_dir, dir_list, ver_dir, save_ver_d):
     last_file_id, last_file_ext = '0', '.json'
     first_file_id, first_file_ext = '0', '.json'
     start_file_id = 0
 
     for d_list in dir_list:
         create_directory(save_dir + '/' + d_list)
-        create_directory(save_dir + '/' + d_list + '/' + ver_dir)
+        create_directory(save_dir + '/' + d_list + '/' + save_ver_d)
         assert os.path.isdir(data_dir + '/' + d_list + '/' + ver_dir)
-        # create_directory(save_dir + '/' + d_list + '/' + ver_dir + '_1')
         input_dir_files = os.listdir(data_dir + '/' + d_list + '/' + ver_dir)
-        output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir)
+        output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + save_ver_d)
         # output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir + '_1')
         if len(output_dir_files) > 0:
             missing_file_list = list(set(input_dir_files).difference(output_dir_files))
@@ -76,7 +75,7 @@ def resize_image_annotation(data_dir, save_dir, dir_list, ver_dir):
                 # line change shift+Alt+ [up or down]
                 # if start_file_id < int(file_id) <= last_file_id:
                 file_path = os.path.join(data_dir + '/' + d_list + '/' + ver_dir + '/' + file)
-                change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir, d_list, file)
+                change_json_data(file_path, save_dir + '/' + d_list + '/' + save_ver_d, d_list, file)
                 # change_json_data(file_path, save_dir + '/' + d_list + '/' + ver_dir + '_1', d_list, file)
         print(f"Total files inside directory: {len(os.listdir(save_dir + '/' + d_list + '/' + ver_dir))}")
 
@@ -89,4 +88,8 @@ if __name__ == '__main__':
     output_dir = os.getcwd() + '/' + my_dict['annotation']['output_dir']
     change_files_dir = my_dict['annotation']['ann_data_correction']['video_files']
     version_dir = my_dict['annotation']['ann_data_correction']['ann_label_ver']
-    resize_image_annotation(input_dir, output_dir, change_files_dir, version_dir)
+    if 'ann_save_ver' in my_dict['annotation']['ann_data_correction']:
+        save_ver_dir = my_dict['annotation']['ann_data_correction']['ann_save_ver']
+    else:
+        save_ver_dir = version_dir
+    resize_image_annotation(input_dir, output_dir, change_files_dir, version_dir, save_ver_dir)
