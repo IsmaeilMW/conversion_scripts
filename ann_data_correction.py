@@ -61,12 +61,16 @@ def resize_image_annotation(data_dir, save_dir, dir_list, ver_dir):
     for d_list in dir_list:
         create_directory(save_dir + '/' + d_list)
         create_directory(save_dir + '/' + d_list + '/' + ver_dir)
+        assert os.path.isdir(data_dir + '/' + d_list + '/' + ver_dir)
         # create_directory(save_dir + '/' + d_list + '/' + ver_dir + '_1')
         input_dir_files = os.listdir(data_dir + '/' + d_list + '/' + ver_dir)
         output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir)
         # output_dir_files = os.listdir(save_dir + '/' + d_list + '/' + ver_dir + '_1')
-        missing_file_list = list(set(input_dir_files).difference(output_dir_files))
-        missing_file_list = sorted(missing_file_list, reverse=False)
+        if len(output_dir_files) > 0:
+            missing_file_list = list(set(input_dir_files).difference(output_dir_files))
+            missing_file_list = sorted(missing_file_list, reverse=False)
+        else:
+            missing_file_list = sorted(input_dir_files, reverse=False)
         for file in tqdm.tqdm(missing_file_list):
             if file.endswith('.json'):
                 # line change shift+Alt+ [up or down]
