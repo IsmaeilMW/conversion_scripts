@@ -51,7 +51,7 @@ def create_test_train_val(in_image_dir, in_annotation_dir, save_dir):
     for file_name in tqdm.tqdm(file_list):
         split_file_name = file_name.split('.')
         ann_file_name = split_file_name[0] + '.json'
-        if count % 10 == 0:
+        if count % 5 == 0:
             if val_count >= test_count:
                 # pass to validation
                 move_files(in_image_dir / file_name, save_dir / 'test' / file_name)

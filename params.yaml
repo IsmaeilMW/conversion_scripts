@@ -36,20 +36,11 @@ training:
       - pca
       - airplane_front
       - pushback_tug
-      - bus
-      - car
-      - van
-      - suv
-      - truck
-      - baggage
+      - belt_loader_version2
+      - fueling_truck
       - tow_tractor
-      - chocks_on
-      - baggage_trailer
-      - chocks_off
-      - fwd_cargo_door_open
-      - cargo_door_opener_ladder
 
-  save_dir: datasets/8
+  save_dir: datasets/9
   dataset_list:
     - train
     - test
@@ -72,6 +63,16 @@ annotation:
     annotation_versions:
       - annotation_1
       - annotation_2
+
+  change_yolo_ann_data:
+    image_dir: rac_g23_v16
+    master_dir: detection/correction_labels/input
+    slave_dir: yolov5/runs/detect/exp48/labels
+    save_dir: detection/correction_labels/modified
+    change_ann_id:
+      - 1
+      - 2
+      - 5
 
 video:
   video_path: live_feed/gate_23/
